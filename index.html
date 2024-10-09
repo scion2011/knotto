@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> [Stock Lotto] Stock Nasdaq AMEX </title>
+	
+	<link rel="stylesheet" href="style_stock_nasdaq.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+    <script src="http://dc-js.github.io/dc.js/js/d3.js" charset="utf-8"></script>
+    <script src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
+    <script src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.2.min.js"></script>
+
+	<style>
+		html, 
+		body {
+			width: 100%;
+			min-height: 100%;
+			font-family: Verdana, Helvetica, sans-serif;
+			margin: 0;
+			top: 0;	
+		}
+
+		header {    
+			width: 100%;  
+			height: 120px;  
+			display: flex;
+			background-image: url(nasdaq_background.png);
+			background-repeat: no-repeat;
+			background-attachment: center;
+			background-size: cover;	
+		}
+		  
+		img {  
+			width: 200px;  
+			height: 80px;  
+			margin-left: 15px;  
+			margin-top: 20px;  
+		} 
+
+		h1 {
+			font-size: 35px;
+			font-weight: bold;
+			color: white;
+			padding-top: 15px;
+			margin-left: 90px;
+		}
+
+		/* Nav tab */
+		/* Style the tab */
+
+		.navtab {
+			overflow: hidden;
+			width: 100%;
+			height: 7%;
+			background-color: #0C2340;
+		}
+
+		/* Style the buttons inside the tab */
+		.navtab button {
+			background-color: #0C2340;
+			color: white;
+			float: left;
+			border: 1px solid lightgray;
+			outline: none;
+			cursor: pointer;
+			padding: 12px 16px;
+			transition: 0.3s;
+			font-size: 17px;
+			font-weight: bold;
+		}
+
+		/* Change background color of buttons on hover */
+		.navtab button:hover {
+			background-color: #0C2340;
+			color: #00BFFF;
+			font-weight: bold;
+		}
+
+		/* Create an active/current tablink class */
+		.navtab button.active {
+			background-color: #0C2340;
+			color: crimson;
+			font-weight: bold;
+		}
+
+		/* Style the tab content */
+		.tabcontent {
+			display: flex;
+			max-width: 100%;
+			padding: 0px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		@media screen and (max-width: 600px) {
+		  .navtab a:not(:first-child) {display: none;}
+		  .navtab a.icon {
+			float: right;
+			display: block;
+		}
+		}
+
+		@media screen and (max-width: 100%) {
+		  .navtab.responsive {position: relative;}
+		  .navtab.responsive .icon {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.navtab.responsive a {
+			float: none;
+			display: block;
+			text-align: left;
+		}
+		}
+
+		.summary-box {
+			display: inline-block;
+			width: 40%;
+			height: 150px;
+			position: fixed;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			background-color: red;
+			padding-top: -10px;
+			margin-top: 2px;
+			margin-bottom: 0px;
+		}
+
+		.info-box {
+			display: inline-block;
+			float: right;
+			width: 60%;
+			height: 150px;
+			background-color: navy;
+			margin-top: 2px;
+			margin-bottom: 0;
+		}
+
+		.summary-box h2 {
+			font-size: 30px;
+			color: white;
+			background-color: red;
+			text-align: center;
+		}
+
+		.summary-box h2 p {
+			font-size: 17px;
+			color: white;
+			text-align: center;
+		}
+	</style>
+
+</head>
+<body>
+
+	<header>
+		<img src="nasdaq_image.jpg" id="nasdaq" alt="nasdaq">
+		<h1> NASDAQ Composition Index <span style="color:gold"> AMEX </span> (COMP AMEX) </h1>
+	</header>
+	
+	<div class="navtab">
+		<button class="tablinks" onclick="openTab(event, 'comp')"> COMP </button>
+		<button class="tablinks" onclick="openTab(event, 'summary')" id="defaultOpen"> Summary </button>
+		<button class="tablinks" onclick="openTab(event, 'historicaldata')"> Historical Data </button>
+	</div>
+
+	<div id="summary" class="tabcontent">
+		<div class="summary-box">
+			<center>
+				<h2 style="background-color:red"> 17,894.46 
+					<p  style="margin-top:5px"> -213.95 <span> -1.18% </span></p>
+					<p id="date-time" style="margin-top:-10px"></p>
+				</h2>
+			</center>
+		</div>
+		
+		<div class="info-box">
+		</div>
+	</div>
+		
+		
+		
+		
+		
+
+</body>
+
+	<script>
+		function openTab(evt, tabName) {
+		  var i, tabcontent, tablinks;
+		  tabcontent = document.getElementsByClassName("tabcontent");
+		  for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		  }
+		  tablinks = document.getElementsByClassName("tablinks");
+		  for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		  }
+		  document.getElementById(tabName).style.display = "block";
+		  evt.currentTarget.className += " active";
+		}
+		
+		document.getElementById("defaultOpen").click();
+	</script>
+	
+	<script>
+		// create a function to update the date and time
+		function updateDateTime() {
+			// create a new `Date` object
+			const current = new Date();
+
+			// get the current date and time as a string
+			const currentDateTime = current.toLocaleString();
+
+			// update the `textContent` property of the `span` element with the `id` of `datetime`
+			document.querySelector('#date-time').textContent = currentDateTime;
+		}
+
+		// call the `updateDateTime` function every second
+		setInterval(updateDateTime, 1000);
+    </script>
+
+
+</html>
